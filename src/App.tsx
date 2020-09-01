@@ -9,7 +9,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
       </header>
       <main className="grid-12">
-        <div className="filter col-4"></div>
+        <div className="filter col-4">learn react</div>
         <div className="col-8">
           <div className="tabs"></div>
           <div className="tickets">
