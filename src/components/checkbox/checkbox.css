@@ -1,0 +1,37 @@
+.checkbox {
+    padding: 15px 20px;
+}
+
+.checkbox:hover {
+    background: #F1FCFF;
+}
+
+.checkbox-input{
+    display: none;
+}
+
+.checkbox-label{
+    display: inline-block;
+    cursor: pointer;
+}
+
+.checkbox-input + span{
+    margin-right: 10px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    text-align: center;    
+    border: 1px solid #9ABBCE;
+    border-radius: 2px;
+    margin-bottom: -5px;
+}
+
+.checkbox-input:checked + span{
+    border: 1px solid #2196F3;   
+}
+.checkbox-input:checked + span::after{
+    color: #2196F3;
+    content: '✔';
+    font-size: 15px;
+}

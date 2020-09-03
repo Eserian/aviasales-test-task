@@ -1,3 +1,4 @@
+
 .container {
   text-align: center;
 }
@@ -12,20 +13,8 @@
   grid-gap: 20px;
 }
 
-.col-4 {
-  grid-column: span 4;
-}
-
 .col-8 {
   grid-column: span 8;
-}
-
-.filter {
-  background: #fff;
-  height: 250px;
-  border: 1px solid #DFE5EC;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
 }
 
 .tabs {
