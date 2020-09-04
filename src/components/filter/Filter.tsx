@@ -21,10 +21,10 @@ const labelMap: labelMapType = {
 
 export const Filter: FC<FilterProps> = ({ stops, handleStopsChange }) => {
 
-  const createToggleHandle = () => (e: any) => {
+  const onToggle = (e: any) => {
     const stopType: string = e.target.dataset.type;
     const isChecked: boolean = e.target.checked;
-  
+
     if (stopType === 'all') {
       const newStops: stopsFilter = {
         0: isChecked,
@@ -51,7 +51,7 @@ export const Filter: FC<FilterProps> = ({ stops, handleStopsChange }) => {
           label='Все'
           stopType='all'
           isChecked={isAllChecked}
-          onToggle={createToggleHandle()}
+          onToggle={onToggle}
         />
         {
           Object.values(stops).map((value, i) => (
@@ -60,7 +60,7 @@ export const Filter: FC<FilterProps> = ({ stops, handleStopsChange }) => {
               label={labelMap[i]}
               stopType={`${i}`}
               isChecked={value}
-              onToggle={createToggleHandle()}
+              onToggle={onToggle}
             />
           ))
         }

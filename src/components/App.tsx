@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useCallback } from 'react';
 import './App.css';
 import { Header } from './header/Header'
 import { Filter } from './filter/Filter'
@@ -44,20 +44,22 @@ const App: FC = () => {
   const [state, setState] = useState(initState);
 
   const handleStopsChange = (stops: stopsFilter) => {
-    const predicate = (item: ticket) => {
-      const stopsFlightForth: string[] = item.segments[0].stops;
-      const stopsFlightBack: string[] = item.segments[1].stops;
+    const tickets = allTickets.filter((ticket: ticket) => {
+      const stopsFlightForth: string[] = ticket.segments[0].stops;
+      const stopsFlightBack: string[] = ticket.segments[1].stops;
+
       return stops[stopsFlightForth.length] || stops[stopsFlightBack.length];
-    }
-    const tickets = allTickets.filter(predicate);
+    });
     setState({ stops, tickets });
   };
+
+  const handleStopsChangeCallback = useCallback(handleStopsChange, [state.stops]);
 
   return (
     <>
       <Header />
       <main className="main-grid">
-        <Filter stops={state.stops} handleStopsChange={handleStopsChange} />
+        <Filter stops={state.stops} handleStopsChange={handleStopsChangeCallback} />
         <div className="col-8">
           <div className="tabs"></div>
           <div className="tickets">
