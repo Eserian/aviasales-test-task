@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import './App.css';
 import { Header } from './header/Header'
 import { Filter } from './filter/Filter'
 
 
-type fly = {
+type flight = {
   origin: string
   destination: string
   date: string
@@ -15,7 +15,7 @@ type fly = {
 type ticket = {
   price: number
   carrier: string
-  segments: fly[]
+  segments: flight[]
 }
 
 export type stopsFilter = {
@@ -27,7 +27,7 @@ type AppState = {
   stops: stopsFilter
 }
 
-function App() {
+const App: FC = () => {
 
   const allTickets: ticket[] = [];
 
@@ -45,9 +45,9 @@ function App() {
 
   const handleStopsChange = (stops: stopsFilter) => {
     const predicate = (item: ticket) => {
-      const stopsFlyForth: Array<string> = item.segments[0].stops;
-      const stopsFlyBack: Array<string> = item.segments[1].stops;
-      return stops[stopsFlyForth.length] || stops[stopsFlyBack.length];
+      const stopsFlightForth: string[] = item.segments[0].stops;
+      const stopsFlightBack: string[] = item.segments[1].stops;
+      return stops[stopsFlightForth.length] || stops[stopsFlightBack.length];
     }
     const tickets = allTickets.filter(predicate);
     setState({ stops, tickets });

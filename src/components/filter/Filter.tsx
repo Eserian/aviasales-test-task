@@ -21,7 +21,7 @@ const labelMap: labelMapType = {
 
 export const Filter: FC<FilterProps> = ({ stops, handleStopsChange }) => {
 
-  const createToggleHandle = (stops: stopsFilter, handleStopsChange: (stops: stopsFilter) => void ) => (e: any) => {
+  const createToggleHandle = () => (e: any) => {
     const stopType: string = e.target.dataset.type;
     const isChecked: boolean = e.target.checked;
   
@@ -48,19 +48,19 @@ export const Filter: FC<FilterProps> = ({ stops, handleStopsChange }) => {
       <div className="filter-header">Количество пересадок</div>
       <div className="checkbox-list">
         <Checkbox
-          label="Все"
-          stopType={'all'}
+          label='Все'
+          stopType='all'
           isChecked={isAllChecked}
-          onToggle={createToggleHandle(stops, handleStopsChange)}
+          onToggle={createToggleHandle()}
         />
         {
           Object.values(stops).map((value, i) => (
             <Checkbox
-            key={i}
-            label={labelMap[i]}
-            stopType={`${i}`}
-            isChecked={value}
-            onToggle={createToggleHandle(stops, handleStopsChange)}
+              key={i}
+              label={labelMap[i]}
+              stopType={`${i}`}
+              isChecked={value}
+              onToggle={createToggleHandle()}
             />
           ))
         }
