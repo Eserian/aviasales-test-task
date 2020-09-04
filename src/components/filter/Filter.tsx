@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent, ChangeEvent }from 'react';
+import React, { FC }from 'react';
 import './filter.css';
 import { Checkbox } from '../checkbox/Checkbox';
 import { stopsFilter } from '../App'
