@@ -1,46 +1,37 @@
-import React, { Fragment, Component } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { Header } from './header/Header'
 import { Filter } from './filter/Filter'
 
 
-type flyType = {
-    // Код города (iata)
-    origin: string
-    // Код города (iata)
-    destination: string
-    // Дата и время вылета туда
-    date: string
-    // Массив кодов (iata) городов с пересадками
-    stops: Array<string>
-    // Общее время перелёта в минутах
-    duration: number
+type fly = {
+  origin: string
+  destination: string
+  date: string
+  stops: Array<string>
+  duration: number
 }
 
-type ticketType = {
-  // Цена в рублях
+type ticket = {
   price: number
-  // Код авиакомпании (iata)
   carrier: string
-  // Массив перелётов.
-  // В тестовом задании это всегда поиск "туда-обратно" значит состоит из двух элементов
-  segments: Array<flyType>
+  segments: fly[]
 }
 
-export type stopsFilterType = {
-  [key: number]: boolean
+export type stopsFilter = {
+  [key: string]: boolean
 }
 
-type AppStateType = {
-  tickets: Array<ticketType>
-  stops: stopsFilterType
+type AppState = {
+  tickets: ticket[]
+  stops: stopsFilter
 }
 
-class App extends Component<{}, AppStateType> {
+function App() {
 
-  allTickets: Array<ticketType> = [];
+  const allTickets: ticket[] = [];
 
-  state = {
+  const initState: AppState = {
     tickets: [],
     stops: {
       0: true,
@@ -50,33 +41,32 @@ class App extends Component<{}, AppStateType> {
     }
   }
 
-  handleStopsChange = (stops: stopsFilterType) => {
-    const predicate = (item: ticketType) => {
+  const [state, setState] = useState(initState);
+
+  const handleStopsChange = (stops: stopsFilter) => {
+    const predicate = (item: ticket) => {
       const stopsFlyForth: Array<string> = item.segments[0].stops;
       const stopsFlyBack: Array<string> = item.segments[1].stops;
       return stops[stopsFlyForth.length] || stops[stopsFlyBack.length];
     }
-    const tickets = this.allTickets.filter(predicate);
-    this.setState({ stops, tickets });
+    const tickets = allTickets.filter(predicate);
+    setState({ stops, tickets });
   };
-  
-  render () {
-    return (
-      <Fragment>
-        <Header />
-        <main className="main-grid">
-          <Filter stops={this.state.stops} handleStopsChange={this.handleStopsChange} />
-          <div className="col-8">
-            <div className="tabs"></div>
-            <div className="tickets">
-              <div className="ticket"></div>
-            </div>
+
+  return (
+    <>
+      <Header />
+      <main className="main-grid">
+        <Filter stops={state.stops} handleStopsChange={handleStopsChange} />
+        <div className="col-8">
+          <div className="tabs"></div>
+          <div className="tickets">
+            <div className="ticket"></div>
           </div>
-        </main>
-      </Fragment>
-    );
-  }
-  
+        </div>
+      </main>
+    </>
+  );
 }
 
 export default App;
