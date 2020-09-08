@@ -2,9 +2,15 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { Filter } from './Filter';
 
-test('renders without crashing', () => {
+test('render correctly', () => {
   const handleStopsChange = () => {};
-  const stops = {};
+  const stops = {
+    0: true,
+    1: true,
+    2: true,
+    3: true,
+  };
 
-  render(<Filter stops={stops} handleStopsChange={handleStopsChange} />);
+  const filter = render(<Filter stops={stops} handleStopsChange={handleStopsChange} />);
+  expect(filter).toMatchSnapshot();
 });
