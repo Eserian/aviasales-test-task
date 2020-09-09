@@ -8,7 +8,7 @@ type flight = {
   origin: string
   destination: string
   date: string
-  stops: Array<string>
+  stops: string[]
   duration: number
 }
 
@@ -22,44 +22,41 @@ export type stopsFilter = {
   [key: string]: boolean
 }
 
-type AppState = {
-  tickets: ticket[]
-  stops: stopsFilter
-}
-
 const App: FC = () => {
 
-  const allTickets: ticket[] = [];
-
-  const initState: AppState = {
-    tickets: [],
-    stops: {
-      0: true,
-      1: true,
-      2: true,
-      3: true,
-    }
+  const initStops: stopsFilter = {
+    0: true,
+    1: true,
+    2: true,
+    3: true,
   }
 
-  const [state, setState] = useState(initState);
+  const [stops, setStops] = useState(initStops);
 
-  const handleStopsChange = (stops: stopsFilter) => {
-    const tickets = allTickets.filter((ticket: ticket) => {
-      const stopsFlightForth: string[] = ticket.segments[0].stops;
-      const stopsFlightBack: string[] = ticket.segments[1].stops;
+  const handleStopsChange = useCallback((e: any) => {
+    const stopType: string = e.target.dataset.type;
+    const isChecked: boolean = e.target.checked;
 
-      return stops[stopsFlightForth.length] || stops[stopsFlightBack.length];
-    });
-    setState({ stops, tickets });
-  };
+    if (stopType === 'all') {
+      const newStops: stopsFilter = {
+        0: isChecked,
+        1: isChecked,
+        2: isChecked,
+        3: isChecked,
+      }
+      setStops(newStops);
+      return;
+    }
 
-  const handleStopsChangeCallback = useCallback(handleStopsChange, [state.stops]);
+    const newStops: stopsFilter = { ...stops, [stopType]: isChecked };
+    setStops(newStops);
+  }, [stops]);
 
   return (
     <>
       <Header />
       <main className="main-grid">
-        <Filter stops={state.stops} handleStopsChange={handleStopsChangeCallback} />
+        <Filter stops={stops} handleStopsChange={handleStopsChange} />
         <div className="col-8">
           <div className="tabs"></div>
           <div className="tickets">

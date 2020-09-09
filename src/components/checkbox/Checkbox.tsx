@@ -5,17 +5,17 @@ type CheckboxProps = {
   stopType: string
   label: string
   isChecked: boolean
-  onToggle: (e: SyntheticEvent) => void
+  onChange: (e: SyntheticEvent) => void
 }
 
-export const Checkbox: FC<CheckboxProps> = ({ stopType, isChecked, label, onToggle }) => (
+export const Checkbox: FC<CheckboxProps> = ({ stopType, isChecked, label, onChange }) => (
   <div className="checkbox">
     <label className="checkbox-label">
     <input
       type="checkbox"
       className="checkbox-input"
       checked={isChecked}
-      onChange={onToggle}
+      onChange={onChange}
       data-type={stopType}
     />
     <span className="checkbox-display"></span>

@@ -27,7 +27,7 @@
     margin-bottom: -5px;
 }
 
-.checkbox-input:checked + .checkbox-display{
+.checkbox-input:checked + .checkbox-display {
     border: 1px solid #2196F3;   
 }
 

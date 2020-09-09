@@ -1,11 +1,11 @@
-import React, { FC }from 'react';
+import React, { FC, SyntheticEvent }from 'react';
 import './filter.css';
 import { Checkbox } from '../checkbox/Checkbox';
 import { stopsFilter } from '../App'
 
 type FilterProps = {
   stops: stopsFilter
-  handleStopsChange: (stops: stopsFilter) => void
+  handleStopsChange: (e: SyntheticEvent) => void
 }
 
 type labelMapType = {
@@ -21,28 +21,7 @@ const labelMap: labelMapType = {
 
 export const Filter: FC<FilterProps> = ({ stops, handleStopsChange }) => {
 
-  const onToggle = (e: any) => {
-    const stopType: string = e.target.dataset.type;
-    const isChecked: boolean = e.target.checked;
-
-    if (stopType === 'all') {
-      const newStops: stopsFilter = {
-        0: isChecked,
-        1: isChecked,
-        2: isChecked,
-        3: isChecked,
-      }
-      handleStopsChange(newStops);
-      return;
-    }
-
-    const newStops: stopsFilter = { ...stops };
-    newStops[stopType] = isChecked;
-    handleStopsChange(newStops);
-  };
-
   const isAllChecked: boolean = Object.values(stops).every(v => v);
-
   return (
     <aside className="filter col-4">
       <div className="filter-header">Количество пересадок</div>
@@ -51,7 +30,7 @@ export const Filter: FC<FilterProps> = ({ stops, handleStopsChange }) => {
           label='Все'
           stopType='all'
           isChecked={isAllChecked}
-          onToggle={onToggle}
+          onChange={handleStopsChange}
         />
         {
           Object.values(stops).map((value, i) => (
@@ -60,7 +39,7 @@ export const Filter: FC<FilterProps> = ({ stops, handleStopsChange }) => {
               label={labelMap[i]}
               stopType={`${i}`}
               isChecked={value}
-              onToggle={onToggle}
+              onChange={handleStopsChange}
             />
           ))
         }
