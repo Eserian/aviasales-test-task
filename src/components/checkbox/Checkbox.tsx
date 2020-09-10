@@ -1,11 +1,11 @@
-import React,{ FC, SyntheticEvent } from "react";
+import React,{ FC } from "react";
 import './checkbox.css';
 
 type CheckboxProps = {
   stopType: string
   label: string
   isChecked: boolean
-  onChange: (e: SyntheticEvent) => void
+  onChange: (e: any) => void
 }
 
 export const Checkbox: FC<CheckboxProps> = ({ stopType, isChecked, label, onChange }) => (

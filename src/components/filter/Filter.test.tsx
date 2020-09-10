@@ -1,46 +1,22 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { Filter } from './Filter';
 
-type stopsFilter = {
-  [key: string]: boolean
-}
+beforeEach(() => {
+  render(<Filter />);
+})
 
-let stops: stopsFilter = {
-  0: true,
-  1: true,
-  2: true,
-  3: true,
-}
+test('Checkbox check/uncheck', () => {
+  const checkbox = screen.getByLabelText('Без пересадок');
+  expect(checkbox).toBeChecked();
+  fireEvent.click(checkbox);
+  expect(checkbox).not.toBeChecked();
+});
 
-const handleStopsChange = (e: any) => {
-  const stopType: string = e.target.dataset.type;
-  const isChecked: boolean = e.target.checked;
-
-  if (stopType === 'all') {
-    const newStops: stopsFilter = {
-      0: isChecked,
-      1: isChecked,
-      2: isChecked,
-      3: isChecked,
-    }
-    stops = { ...newStops };
-    return;
-  }
-
-  const newStops: stopsFilter = { ...stops, [stopType]: isChecked };
-  stops = { ...newStops };
-};
-
-test('Checkboxes works correctly', () => {
-  const { getByLabelText, rerender, getAllByRole  } = render(<Filter stops={stops} handleStopsChange={handleStopsChange} />);
-
-  const checkboxTypeAll = getByLabelText('Все');
-  expect(checkboxTypeAll).toBeChecked();
-
-  fireEvent.click(checkboxTypeAll);
-  rerender(<Filter stops={stops} handleStopsChange={handleStopsChange} />)
-
-  const checkboxes = getAllByRole('checkbox');
+test('Checkbox "All" works correctly', () => {
+  const checkboxAll = screen.getByLabelText('Все');
+  const checkboxes = screen.getAllByRole('checkbox');
+  checkboxes.forEach((c) => expect(c).toBeChecked())
+  fireEvent.click(checkboxAll);
   checkboxes.forEach((c) => expect(c).not.toBeChecked())
 });
