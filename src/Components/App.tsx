@@ -19,9 +19,52 @@ export type ticket = {
   segments: flight[]
 }
 
+const testTickets: ticket[] = [
+  {
+    price: 93332,
+    carrier: "EY",
+    segments: [
+      {
+        origin: "MOW",
+        destination: "HKT",
+        date: "2020-09-21T05:35:00.000Z",
+        stops: ["IST","HKG"],
+        duration: 1706
+      },
+      {
+        origin: "HKT",
+        destination: "MOW",
+        date: "2020-10-11T14:56:00.000Z",
+        stops: ["DXB"],
+        duration: 681
+      }
+    ]
+  },
+  {
+    price: 93332,
+    carrier: "S7",
+    segments: [
+      {
+        origin: "MOW",
+        destination: "HKT",
+        date: "2020-09-21T05:35:00.000Z",
+        stops: ["IST","HKG"],
+        duration: 1706
+      },
+      {
+        origin: "HKT",
+        destination: "MOW",
+        date: "2020-10-11T14:56:00.000Z",
+        stops: ["DXB"],
+        duration: 681
+      }
+    ]
+  }
+];
+
 const App: FC = () => {
 
-  const [tickets] = useState([]);
+  const [tickets] = useState(testTickets);
 
   return (
     <>
@@ -31,7 +74,7 @@ const App: FC = () => {
         <div className="col-8">
           <Sorting />
           <div className="ticketList">
-            {tickets.map((ticket: ticket) => <Ticket ticket={ticket} />)}
+            {tickets.map((ticket: ticket, i) => <Ticket key={i} ticket={ticket} />)}
           </div>
         </div>
       </main>
