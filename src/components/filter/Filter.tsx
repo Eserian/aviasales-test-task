@@ -21,17 +21,14 @@ export const Filter: FC = () => {
     const isChecked: boolean = e.target.checked;
     
     if (stopType === 'all') {
-      const newStops: stops = {};
-      Object.entries(stops).forEach(([key, value]) => newStops[key] = { ...value, checked: isChecked});
-      setStops(newStops);
+      setStops(Object.entries(stops).reduce((acc, [key, value]) => ({ ...acc, [key]: { ...value, checked: isChecked } }), {}));
       return;
     }
 
     const newStops = { ...stops, [stopType]: { ...stops[stopType], checked: isChecked }}
-    const isAllChecked: boolean = Object.entries(newStops).filter(([key, ]) => key !== 'all').every(([, { checked }]) => checked);
-    newStops['all'] = { ...newStops['all'], checked: isAllChecked };
+    const isAllFieldsChecked: boolean = Object.entries(newStops).filter(([key, ]) => key !== 'all').every(([, { checked }]) => checked);
+    newStops['all'] = { ...newStops['all'], checked: isAllFieldsChecked };
     setStops(newStops);
-    
   }, [stops]);
 
   return (
