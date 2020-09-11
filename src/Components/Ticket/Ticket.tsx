@@ -35,7 +35,7 @@ export const Ticket: FC<FlightCardProps> = ({ ticket }) => {
         <div className="row">
           <div className="container">
             <div className="title">{`${ticket.segments[0].origin}-${ticket.segments[0].destination}`}</div>
-            <div className="subtitle">{`${moment(ticket.segments[0].date).format('HH:mm')} - ${moment(ticket.segments[0].date).add(ticket.segments[0].duration, 'm').format('HH:mm')}`}</div>
+            <div className="subtitle">{`${moment.utc(ticket.segments[0].date).format('HH:mm')} - ${moment.utc(ticket.segments[0].date).add(ticket.segments[0].duration, 'm').format('HH:mm')}`}</div>
           </div>
           <div className="container">
             <div className="title">В пути</div>
@@ -49,7 +49,7 @@ export const Ticket: FC<FlightCardProps> = ({ ticket }) => {
         <div className="row">
           <div className="container">
           <div className="title">{`${ticket.segments[1].origin}-${ticket.segments[1].destination}`}</div>
-            <div className="subtitle">{`${moment(ticket.segments[1].date).format('HH:mm')} - ${moment(ticket.segments[1].date).add(ticket.segments[1].duration, 'm').format('HH:mm')}`}</div>
+            <div className="subtitle">{`${moment.utc(ticket.segments[1].date).format('HH:mm')} - ${moment.utc(ticket.segments[1].date).add(ticket.segments[1].duration, 'm').format('HH:mm')}`}</div>
           </div>
           <div className="container">
             <div className="title">В пути</div>
