@@ -4,19 +4,19 @@ import './sorting.css';
 
 export const Sorting: FC = () => {
 
-  const [curSort, setCurSort] = useState('cheap');
+  const [sortType, setSortType] = useState('cheap');
 
   const leftTabClass = cn('tab', 'left-tab', {
-    active: curSort === 'cheap'
+    active: sortType === 'cheap'
   })
 
   const rightTabClass = cn('tab', 'right-tab', {
-    active: curSort === 'fast'
+    active: sortType === 'fast'
   })
 
   const handleClick = useCallback((e: any) => {
     const sortName: string = e.target.dataset.sortname;
-    setCurSort(sortName);
+    setSortType(sortName);
   }, []);
 
   return (
