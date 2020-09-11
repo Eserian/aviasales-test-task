@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import './App.css';
 import { Header } from './header/Header'
 import { Filter } from './filter/Filter'
-
+import { Sorting } from './sorting/Sorting'
 
 type flight = {
   origin: string
@@ -25,7 +25,7 @@ const App: FC = () => {
       <main className="main-grid">
         <Filter />
         <div className="col-8">
-          <div className="tabs"></div>
+          <Sorting />
           <div className="tickets">
             <div className="ticket"></div>
           </div>

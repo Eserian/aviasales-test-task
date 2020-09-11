@@ -1,0 +1,34 @@
+.tabs {
+  display: flex;
+  background: #fff;
+  height: 50px;
+  border: 1px solid #DFE5EC;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.tab {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.left-tab {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.right-tab {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.active {
+  background: #2196F3;
+  color: #fff;
+}
