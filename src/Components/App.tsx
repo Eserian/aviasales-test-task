@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import './App.css';
-import { Header } from './header/Header'
-import { Filter } from './filter/Filter'
-import { Sorting } from './sorting/Sorting'
+import { Header } from './Header/Header';
+import { Filter } from './Filter/Filter';
+import { Sorting } from './Sorting/Sorting';
+import { Ticket } from './Ticket/Ticket';
 
 type flight = {
   origin: string
@@ -12,13 +13,16 @@ type flight = {
   duration: number
 }
 
-type ticket = {
+export type ticket = {
   price: number
   carrier: string
   segments: flight[]
 }
 
 const App: FC = () => {
+
+  const [tickets, setTickets] = useState([]);
+
   return (
     <>
       <Header />
@@ -26,8 +30,8 @@ const App: FC = () => {
         <Filter />
         <div className="col-8">
           <Sorting />
-          <div className="tickets">
-            <div className="ticket"></div>
+          <div className="ticketList">
+            {tickets.map((ticket: ticket) => <Ticket ticket={ticket} />)}
           </div>
         </div>
       </main>

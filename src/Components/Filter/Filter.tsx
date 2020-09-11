@@ -1,6 +1,6 @@
 import React, { FC, useState, useCallback }from 'react';
 import './filter.css';
-import { Checkbox } from '../checkbox/Checkbox';
+import { Checkbox } from '../Checkbox/Checkbox';
 
 type stops = { [key: string] : { label: string,  checked: boolean }};
 
