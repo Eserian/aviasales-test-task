@@ -21,7 +21,7 @@ export type ticket = {
 
 const App: FC = () => {
 
-  const [tickets, setTickets] = useState([]);
+  const [tickets] = useState([]);
 
   return (
     <>
