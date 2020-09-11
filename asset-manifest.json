@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/aviasales-test-task/static/css/main.cdea914e.chunk.css",
-    "main.js": "/aviasales-test-task/static/js/main.6b580aab.chunk.js",
-    "main.js.map": "/aviasales-test-task/static/js/main.6b580aab.chunk.js.map",
+    "main.css": "/aviasales-test-task/static/css/main.26db5a67.chunk.css",
+    "main.js": "/aviasales-test-task/static/js/main.58a2429a.chunk.js",
+    "main.js.map": "/aviasales-test-task/static/js/main.58a2429a.chunk.js.map",
     "runtime-main.js": "/aviasales-test-task/static/js/runtime-main.84b0ed7e.js",
     "runtime-main.js.map": "/aviasales-test-task/static/js/runtime-main.84b0ed7e.js.map",
-    "static/js/2.6b333925.chunk.js": "/aviasales-test-task/static/js/2.6b333925.chunk.js",
-    "static/js/2.6b333925.chunk.js.map": "/aviasales-test-task/static/js/2.6b333925.chunk.js.map",
+    "static/js/2.35171082.chunk.js": "/aviasales-test-task/static/js/2.35171082.chunk.js",
+    "static/js/2.35171082.chunk.js.map": "/aviasales-test-task/static/js/2.35171082.chunk.js.map",
     "index.html": "/aviasales-test-task/index.html",
-    "precache-manifest.72ff173b747d11bd76712ee39384f788.js": "/aviasales-test-task/precache-manifest.72ff173b747d11bd76712ee39384f788.js",
+    "precache-manifest.d0e4c0e69416e8eda63748543f166749.js": "/aviasales-test-task/precache-manifest.d0e4c0e69416e8eda63748543f166749.js",
     "service-worker.js": "/aviasales-test-task/service-worker.js",
-    "static/css/main.cdea914e.chunk.css.map": "/aviasales-test-task/static/css/main.cdea914e.chunk.css.map",
-    "static/js/2.6b333925.chunk.js.LICENSE.txt": "/aviasales-test-task/static/js/2.6b333925.chunk.js.LICENSE.txt",
+    "static/css/main.26db5a67.chunk.css.map": "/aviasales-test-task/static/css/main.26db5a67.chunk.css.map",
+    "static/js/2.35171082.chunk.js.LICENSE.txt": "/aviasales-test-task/static/js/2.35171082.chunk.js.LICENSE.txt",
     "static/media/index.css": "/aviasales-test-task/static/media/OpenSans-SemiBold.fe241c6c.woff",
     "static/media/logo.svg": "/aviasales-test-task/static/media/logo.96990a1b.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.84b0ed7e.js",
-    "static/js/2.6b333925.chunk.js",
-    "static/css/main.cdea914e.chunk.css",
-    "static/js/main.6b580aab.chunk.js"
+    "static/js/2.35171082.chunk.js",
+    "static/css/main.26db5a67.chunk.css",
+    "static/js/main.58a2429a.chunk.js"
   ]
 }
