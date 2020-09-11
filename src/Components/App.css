@@ -17,14 +17,6 @@
   grid-column: span 8;
 }
 
-.tabs {
-  background: #fff;
-  height: 50px;
-  border: 1px solid #DFE5EC;
-  margin-bottom: 20px;
-  border-radius: 5px;
-}
-
 .ticket {
   height: 180px;
   background: #fff;
