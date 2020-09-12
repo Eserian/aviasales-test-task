@@ -1,9 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import './App.css';
 import { Header } from './Header/Header';
 import { Filter } from './Filter/Filter';
 import { Sorting } from './Sorting/Sorting';
 import { Ticket } from './Ticket/Ticket';
+import axios from 'axios';
 
 type flight = {
   origin: string
@@ -21,7 +22,40 @@ export type ticket = {
 
 const App: FC = () => {
 
-  const [tickets] = useState([]);
+  const [allTickets, setAllTickets] = useState([]);
+  
+
+  useEffect(() => {
+    const loadTicket = async () => {
+      const getSearchId = async () => {
+        const raw = await axios.get("https://front-test.beta.aviasales.ru/search");
+        return raw.data.searchId;
+      }
+      const searchId = await getSearchId();
+      
+      const getTicketPack = async (searchId: string) => {
+        const raw = await axios.get(`https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`);
+        return raw.data;
+      }
+
+      const iter: any = async (sId: string, acc: any) => {
+        try {
+          const ticketPack: any = await getTicketPack(searchId);
+          const newAcc: any = [...acc, ...ticketPack.tickets];
+          if (ticketPack.stop) {
+            return newAcc;
+          }
+          return iter(sId, newAcc);
+        } catch (e) {
+          return iter(sId, acc);
+        }
+        
+      }
+      const tickets = await iter(searchId, []);
+      setAllTickets(tickets);
+    }
+    loadTicket();
+  }, []);
 
   return (
     <>
@@ -30,9 +64,11 @@ const App: FC = () => {
         <Filter />
         <div className="col-8">
           <Sorting />
-          <div className="ticketList">
-            {tickets.map((ticket: ticket, i) => <Ticket key={i} ticket={ticket} />)}
-          </div>
+          {
+            <div className="ticketList">
+              {allTickets.slice(0, 5).map((ticket: ticket, i) => <Ticket key={i} ticket={ticket} />)}
+            </div>
+          }
         </div>
       </main>
     </>
