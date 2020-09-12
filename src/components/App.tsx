@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import './App.css';
 import { Header } from './Header/Header';
 import { Filter } from './Filter/Filter';
@@ -21,10 +21,31 @@ export type ticket = {
   segments: flight[]
 }
 
+const comparePrice = (a: ticket, b: ticket) => a.price - b.price;
+
+const copmareFlightDuration = (a: ticket, b: ticket) => {
+  const firstFlightDuration = a.segments[0].duration + a.segments[1].duration;
+  const secondFlightDuration = b.segments[0].duration + b.segments[1].duration;
+
+  return firstFlightDuration - secondFlightDuration;
+}
+
+type sortingMap = {
+  [key: string]: (a: ticket, b: ticket) => number
+}
+
+const sortingMap: sortingMap = {
+  'cheap': comparePrice,
+  'fast': copmareFlightDuration
+}
+
 const App: FC = () => {
 
   const [allTickets, setAllTickets] = useState([]);
   const [isLoad, setIsLoad] = useState(true);
+  const [sort, setSort] = useState('cheap');
+
+  const handleSort = useCallback(((sortType: string) => setSort(sortType)), []);
 
   useEffect(() => {
     const loadTicket = async () => {
@@ -53,6 +74,7 @@ const App: FC = () => {
         
       }
       const tickets = await iter(searchId, []);
+
       setAllTickets(tickets);
       setIsLoad(false);
     }
@@ -65,12 +87,12 @@ const App: FC = () => {
       <main className="main-grid">
         <Filter />
         <div className="col-8">
-          <Sorting />
+          <Sorting handleSort={handleSort} />
           {
             isLoad ?
               <Preload /> :
               <div className="ticketList">
-                {allTickets.slice(0, 5).map((ticket: ticket, i) => <Ticket key={i} ticket={ticket} />)}
+                {allTickets.sort(sortingMap[sort]).slice(0, 5).map((ticket: ticket, i) => <Ticket key={i} ticket={ticket} />)}
               </div>
           }
         </div>

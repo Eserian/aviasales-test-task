@@ -2,7 +2,11 @@ import cn from 'classnames'
 import React, { FC, useState, useCallback }from 'react';
 import './sorting.css';
 
-export const Sorting: FC = () => {
+type sortingProps = {
+  handleSort: (sortType: string) => void
+}
+
+export const Sorting: FC<sortingProps> = ({ handleSort }) => {
 
   const [sortType, setSortType] = useState('cheap');
 
@@ -17,7 +21,8 @@ export const Sorting: FC = () => {
   const handleClick = useCallback((e: any) => {
     const sortName: string = e.target.dataset.sortname;
     setSortType(sortName);
-  }, []);
+    handleSort(sortName);
+  }, [handleSort]);
 
   return (
     <div className="tabs">
