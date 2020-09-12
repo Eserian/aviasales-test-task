@@ -39,6 +39,16 @@ const sortingMap: sortingMap = {
   'fast': copmareFlightDuration
 }
 
+const getSearchId = async () => {
+  const raw = await axios.get("https://front-test.beta.aviasales.ru/search");
+  return raw.data.searchId;
+}
+
+const getTicketPack = async (searchId: string) => {
+  const raw = await axios.get(`https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`);
+  return raw.data;
+}
+
 const App: FC = () => {
 
   const [allTickets, setAllTickets] = useState([]);
@@ -51,17 +61,6 @@ const App: FC = () => {
 
   useEffect(() => {
     const loadTicket = async () => {
-      const getSearchId = async () => {
-        const raw = await axios.get("https://front-test.beta.aviasales.ru/search");
-        return raw.data.searchId;
-      }
-      const searchId = await getSearchId();
-      
-      const getTicketPack = async (searchId: string) => {
-        const raw = await axios.get(`https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`);
-        return raw.data;
-      }
-
       const iter: any = async (sId: string, acc: any) => {
         try {
           const ticketPack: any = await getTicketPack(searchId);
@@ -75,6 +74,8 @@ const App: FC = () => {
         }
         
       }
+
+      const searchId = await getSearchId();
       const tickets = await iter(searchId, []);
 
       setAllTickets(tickets);
@@ -94,15 +95,17 @@ const App: FC = () => {
             isLoad ?
               <Preload /> :
               <div className="ticketList">
-                {allTickets
-                  .filter((ticket: ticket) => {
-                    const flightForceStops: number = ticket.segments[0].stops.length;
-                    const flightBackStops: number = ticket.segments[1].stops.length;
-                    return filterParams.includes(flightForceStops) && filterParams.includes(flightBackStops);
-                  })
-                  .sort(sortingMap[sort])
-                  .slice(0, 5)
-                  .map((ticket: ticket, i) => <Ticket key={i} ticket={ticket} />)}
+                {
+                  allTickets
+                    .filter((ticket: ticket) => {
+                      const flightForceStops: number = ticket.segments[0].stops.length;
+                      const flightBackStops: number = ticket.segments[1].stops.length;
+                      return filterParams.includes(flightForceStops) && filterParams.includes(flightBackStops);
+                    })
+                    .sort(sortingMap[sort])
+                    .slice(0, 5)
+                    .map((ticket: ticket, i) => <Ticket key={i} ticket={ticket} />)
+                }
               </div>
           }
         </div>
