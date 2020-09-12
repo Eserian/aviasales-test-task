@@ -4,6 +4,7 @@ import { Header } from './Header/Header';
 import { Filter } from './Filter/Filter';
 import { Sorting } from './Sorting/Sorting';
 import { Ticket } from './Ticket/Ticket';
+import { Preload } from './Preload/Preload';
 import axios from 'axios';
 
 type flight = {
@@ -23,7 +24,7 @@ export type ticket = {
 const App: FC = () => {
 
   const [allTickets, setAllTickets] = useState([]);
-  
+  const [isLoad, setIsLoad] = useState(true);
 
   useEffect(() => {
     const loadTicket = async () => {
@@ -53,6 +54,7 @@ const App: FC = () => {
       }
       const tickets = await iter(searchId, []);
       setAllTickets(tickets);
+      setIsLoad(false);
     }
     loadTicket();
   }, []);
@@ -65,9 +67,11 @@ const App: FC = () => {
         <div className="col-8">
           <Sorting />
           {
-            <div className="ticketList">
-              {allTickets.slice(0, 5).map((ticket: ticket, i) => <Ticket key={i} ticket={ticket} />)}
-            </div>
+            isLoad ?
+              <Preload /> :
+              <div className="ticketList">
+                {allTickets.slice(0, 5).map((ticket: ticket, i) => <Ticket key={i} ticket={ticket} />)}
+              </div>
           }
         </div>
       </main>
