@@ -1,21 +1,11 @@
-import React, { FC }from 'react';
+import React, { FC } from 'react';
 import { ticket } from '../App';
-import moment from 'moment';
+import plural from 'plural-ru';
+import { format, addMinutes } from 'date-fns';
 import './ticket.css';
 
 type FlightCardProps ={
-  ticket: ticket
-};
-
-const stopsConvertToText = (stops: string[]) => {
-  switch (stops.length) {
-    case 0:
-      return 'Без пересадок';
-    case 1:
-      return '1 пересадка';
-    default:
-      return `${stops.length} пересадки`
-  } 
+  data: ticket
 };
 
 const getTimeFromMins = (mins: number) => {
@@ -24,42 +14,41 @@ const getTimeFromMins = (mins: number) => {
   return `${hours}ч ${minutes}м`;
 };
 
-export const Ticket: FC<FlightCardProps> = ({ ticket }) => {
+const formatDate = (rawDate: string) => {
+  const date = new Date(rawDate);
+  return format(addMinutes(date, date.getTimezoneOffset()), 'HH:mm');
+}
+
+export const Ticket: FC<FlightCardProps> = ({ data }) => {
+
+  const { price, carrier, segments } = data;
+  const url = `//pics.avs.io/99/36/${carrier}.png`;
+
   return (
     <div className="ticket">
       <header className="ticket-header">
-        <div className="ticket-price">{`${ticket.price} Р`}</div>
-        <div className="ticket-logo"><img src={`//pics.avs.io/99/36/${ticket.carrier}.png`} alt="logo"/></div>
+        <div className="ticket-price">{`${price} Р`}</div>
+        <div className="ticket-logo"><img src={url} alt="logo"/></div>
       </header>
       <div className="flight-data">
-        <div className="row">
-          <div className="container">
-            <div className="title">{`${ticket.segments[0].origin}-${ticket.segments[0].destination}`}</div>
-            <div className="subtitle">{`${moment.utc(ticket.segments[0].date).format('HH:mm')} - ${moment.utc(ticket.segments[0].date).add(ticket.segments[0].duration, 'm').format('HH:mm')}`}</div>
-          </div>
-          <div className="container">
-            <div className="title">В пути</div>
-            <div className="subtitle">{getTimeFromMins(ticket.segments[0].duration)}</div>
-          </div>
-          <div className="container">
-            <div className="title">{stopsConvertToText(ticket.segments[0].stops)}</div>
-            <div className="subtitle">{ticket.segments[0].stops.join(',')}</div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="container">
-          <div className="title">{`${ticket.segments[1].origin}-${ticket.segments[1].destination}`}</div>
-            <div className="subtitle">{`${moment.utc(ticket.segments[1].date).format('HH:mm')} - ${moment.utc(ticket.segments[1].date).add(ticket.segments[1].duration, 'm').format('HH:mm')}`}</div>
-          </div>
-          <div className="container">
-            <div className="title">В пути</div>
-            <div className="subtitle">{getTimeFromMins(ticket.segments[1].duration)}</div>
-          </div>
-          <div className="container">
-            <div className="title">{stopsConvertToText(ticket.segments[1].stops)}</div>
-            <div className="subtitle">{ticket.segments[1].stops.join(',')}</div>
-          </div>
-        </div>
+        {
+          segments.map(({ origin, destination, date, stops, duration }, i) => (
+            <div key={i} className="row">
+              <div className="container">
+                <div className="title">{`${origin}-${destination}`}</div>
+                <div className="subtitle">{`${formatDate(date)} - ${format(addMinutes(addMinutes(new Date(date), new Date(date).getTimezoneOffset()), duration), 'HH:mm')}`}</div>
+              </div>
+              <div className="container">
+                <div className="title">В пути</div>
+                <div className="subtitle">{getTimeFromMins(duration)}</div>
+              </div>
+              <div className="container">
+                <div className="title">{plural(stops.length, '%d пересадка', '%d пересадки', '%d пересадок')}</div>
+                <div className="subtitle">{stops.join(',')}</div>
+              </div>
+            </div>
+          ))
+        }
       </div>
     </div>
   )

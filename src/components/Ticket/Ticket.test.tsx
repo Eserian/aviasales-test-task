@@ -25,6 +25,6 @@ const testTicket: ticket = {
 }
 
 test('Render correctly', () => {
-  const ticket = render(<Ticket ticket={testTicket} />);
+  const ticket = render(<Ticket data={testTicket} />);
   expect(ticket).toMatchSnapshot();
 })

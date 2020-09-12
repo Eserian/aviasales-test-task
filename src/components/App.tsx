@@ -31,7 +31,7 @@ const App: FC = () => {
         <div className="col-8">
           <Sorting />
           <div className="ticketList">
-            {tickets.map((ticket: ticket, i) => <Ticket key={i} ticket={ticket} />)}
+            {tickets.map((ticket: ticket, i) => <Ticket key={i} data={ticket} />)}
           </div>
         </div>
       </main>
