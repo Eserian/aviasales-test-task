@@ -9,15 +9,10 @@ type FlightCardProps ={
 };
 
 const getTimeFromMins = (mins: number) => {
-  const hours: number = Math.trunc(mins/60);
-  const minutes: number = mins % 60;
+  const hours = Math.trunc(mins/60);
+  const minutes = mins % 60;
   return `${hours}ч ${minutes}м`;
 };
-
-const formatDate = (rawDate: string) => {
-  const date = new Date(rawDate);
-  return format(addMinutes(date, date.getTimezoneOffset()), 'HH:mm');
-}
 
 export const Ticket: FC<FlightCardProps> = ({ data }) => {
 
@@ -36,7 +31,7 @@ export const Ticket: FC<FlightCardProps> = ({ data }) => {
             <div key={i} className="row">
               <div className="container">
                 <div className="title">{`${origin}-${destination}`}</div>
-                <div className="subtitle">{`${formatDate(date)} - ${format(addMinutes(addMinutes(new Date(date), new Date(date).getTimezoneOffset()), duration), 'HH:mm')}`}</div>
+                <div className="subtitle">{`${format(new Date(date), 'HH:mm')} - ${format(addMinutes(new Date(date), duration), 'HH:mm')}`}</div>
               </div>
               <div className="container">
                 <div className="title">В пути</div>
