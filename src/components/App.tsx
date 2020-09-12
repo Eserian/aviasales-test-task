@@ -44,8 +44,10 @@ const App: FC = () => {
   const [allTickets, setAllTickets] = useState([]);
   const [isLoad, setIsLoad] = useState(true);
   const [sort, setSort] = useState('cheap');
+  const [filterParams, setFilterParams] = useState([0, 1, 2, 3]);
 
   const handleSort = useCallback(((sortType: string) => setSort(sortType)), []);
+  const handleFilter = useCallback(((filterParams: (number)[]) => setFilterParams(filterParams)), []);
 
   useEffect(() => {
     const loadTicket = async () => {
@@ -85,14 +87,22 @@ const App: FC = () => {
     <>
       <Header />
       <main className="main-grid">
-        <Filter />
+        <Filter handleFilter={handleFilter} />
         <div className="col-8">
           <Sorting handleSort={handleSort} />
           {
             isLoad ?
               <Preload /> :
               <div className="ticketList">
-                {allTickets.sort(sortingMap[sort]).slice(0, 5).map((ticket: ticket, i) => <Ticket key={i} ticket={ticket} />)}
+                {allTickets
+                  .filter((ticket: ticket) => {
+                    const flightForceStops: number = ticket.segments[0].stops.length;
+                    const flightBackStops: number = ticket.segments[1].stops.length;
+                    return filterParams.includes(flightForceStops) && filterParams.includes(flightBackStops);
+                  })
+                  .sort(sortingMap[sort])
+                  .slice(0, 5)
+                  .map((ticket: ticket, i) => <Ticket key={i} ticket={ticket} />)}
               </div>
           }
         </div>
