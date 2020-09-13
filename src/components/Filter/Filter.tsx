@@ -10,7 +10,7 @@ type filterProps = {
   handleFilter: (filterParams: number[]) => void
 }
 
-export const Filter: FC<filterProps> = ({handleFilter}) => {
+export const Filter: FC<filterProps> = ({ handleFilter }) => {
 
   const initStops: stops = {
     'all': { label: 'Все', checked: true, filterParam: -1 },
@@ -36,7 +36,10 @@ export const Filter: FC<filterProps> = ({handleFilter}) => {
     const isAllFieldsChecked: boolean = Object.entries(newStops).filter(([key, ]) => key !== 'all').every(([, { checked }]) => checked);
     newStops['all'] = { ...newStops['all'], checked: isAllFieldsChecked };
     setStops(newStops);
-    handleFilter(Object.keys(newStops).filter((key) => newStops[key].checked).map((key) => newStops[key].filterParam));
+    handleFilter(Object.keys(newStops)
+      .filter((key) => newStops[key].checked)
+      .map((key) => newStops[key].filterParam)
+    );
   }, [handleFilter, stops]);
 
   return (

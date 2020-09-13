@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import './App.css';
 import { Header } from './Header/Header';
 import { Filter } from './Filter/Filter';
@@ -21,6 +21,10 @@ export type ticket = {
   segments: flight[]
 }
 
+type sortingMap = {
+  [key: string]: (a: ticket, b: ticket) => number
+}
+
 const comparePrice = (a: ticket, b: ticket) => a.price - b.price;
 
 const copmareFlightDuration = (a: ticket, b: ticket) => {
@@ -30,23 +34,21 @@ const copmareFlightDuration = (a: ticket, b: ticket) => {
   return firstFlightDuration - secondFlightDuration;
 }
 
-type sortingMap = {
-  [key: string]: (a: ticket, b: ticket) => number
-}
-
 const sortingMap: sortingMap = {
   'cheap': comparePrice,
   'fast': copmareFlightDuration
 }
 
 const getSearchId = async () => {
-  const raw = await axios.get("https://front-test.beta.aviasales.ru/search");
-  return raw.data.searchId;
+  const url = "https://front-test.beta.aviasales.ru/search";
+  const response = await axios.get(url);
+  return response.data.searchId;
 }
 
 const getTicketPack = async (searchId: string) => {
-  const raw = await axios.get(`https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`);
-  return raw.data;
+  const url = `https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`;
+  const response = await axios.get(url);
+  return response.data;
 }
 
 const App: FC = () => {
@@ -56,23 +58,19 @@ const App: FC = () => {
   const [sort, setSort] = useState('cheap');
   const [filterParams, setFilterParams] = useState([0, 1, 2, 3]);
 
-  const handleSort = useCallback(((sortType: string) => setSort(sortType)), []);
-  const handleFilter = useCallback(((filterParams: (number)[]) => setFilterParams(filterParams)), []);
-
   useEffect(() => {
     const loadTicket = async () => {
-      const iter: any = async (sId: string, acc: any) => {
+      const iter: any = async (searchId: string, acc: ticket[]) => {
         try {
-          const ticketPack: any = await getTicketPack(searchId);
-          const newAcc: any = [...acc, ...ticketPack.tickets];
+          const ticketPack = await getTicketPack(searchId);
+          const newAcc = [...acc, ...ticketPack.tickets];
           if (ticketPack.stop) {
             return newAcc;
           }
-          return iter(sId, newAcc);
+          return iter(searchId, newAcc);
         } catch (e) {
-          return iter(sId, acc);
+          return iter(searchId, acc);
         }
-        
       }
 
       const searchId = await getSearchId();
@@ -91,15 +89,15 @@ const App: FC = () => {
         isLoad ?
           <Preload /> :
           <main className="main-grid">
-            <Filter handleFilter={handleFilter} />
+            <Filter handleFilter={setFilterParams} />
             <div className="col-8">
-              <Sorting handleSort={handleSort} />
+              <Sorting handleSort={setSort} />
               <div className="ticketList">
                 {
                   allTickets
                     .filter((ticket: ticket) => {
-                      const flightForceStops: number = ticket.segments[0].stops.length;
-                      const flightBackStops: number = ticket.segments[1].stops.length;
+                      const flightForceStops = ticket.segments[0].stops.length;
+                      const flightBackStops = ticket.segments[1].stops.length;
                       return filterParams.includes(flightForceStops) && filterParams.includes(flightBackStops);
                     })
                     .sort(sortingMap[sort])
