@@ -104,7 +104,7 @@ const App: FC = () => {
                     })
                     .sort(sortingMap[sort])
                     .slice(0, 5)
-                    .map((ticket: ticket, i) => <Ticket key={i} ticket={ticket} />)
+                    .map((ticket: ticket, i) => <Ticket key={i} data={ticket} />)
                 }
               </div>
           }

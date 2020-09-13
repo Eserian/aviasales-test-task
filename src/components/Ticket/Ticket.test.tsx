@@ -10,14 +10,14 @@ const testTicket: ticket = {
     {
       origin: "MOW",
       destination: "HKT",
-      date: "2020-09-21T05:35:00.000Z",
+      date: "2020-09-21T05:35:00",
       stops: ["IST","HKG"],
       duration: 1706
     },
     {
       origin: "HKT",
       destination: "MOW",
-      date: "2020-10-11T14:56:00.000Z",
+      date: "2020-10-11T14:56:00",
       stops: ["DXB"],
       duration: 681
     }
@@ -25,6 +25,6 @@ const testTicket: ticket = {
 }
 
 test('Render correctly', () => {
-  const ticket = render(<Ticket ticket={testTicket} />);
+  const ticket = render(<Ticket data={testTicket} />);
   expect(ticket).toMatchSnapshot();
 })
