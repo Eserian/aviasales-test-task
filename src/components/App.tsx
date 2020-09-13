@@ -87,13 +87,13 @@ const App: FC = () => {
   return (
     <>
       <Header />
-      <main className="main-grid">
-        <Filter handleFilter={handleFilter} />
-        <div className="col-8">
-          <Sorting handleSort={handleSort} />
-          {
-            isLoad ?
-              <Preload /> :
+      {
+        isLoad ?
+          <Preload /> :
+          <main className="main-grid">
+            <Filter handleFilter={handleFilter} />
+            <div className="col-8">
+              <Sorting handleSort={handleSort} />
               <div className="ticketList">
                 {
                   allTickets
@@ -106,10 +106,10 @@ const App: FC = () => {
                     .slice(0, 5)
                     .map((ticket: ticket, i) => <Ticket key={i} data={ticket} />)
                 }
-              </div>
-          }
-        </div>
-      </main>
+              </div> 
+            </div>
+          </main>
+      }
     </>
   );
 }
