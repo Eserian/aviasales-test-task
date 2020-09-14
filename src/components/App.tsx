@@ -39,14 +39,16 @@ const sortingMap: sortingMap = {
   'fast': copmareFlightDuration
 }
 
+const mainUrl = 'https://front-test.beta.aviasales.ru';
+
 const getSearchId = async () => {
-  const url = "https://front-test.beta.aviasales.ru/search";
+  const url = `${mainUrl}/search`;
   const response = await axios.get(url);
   return response.data.searchId;
 }
 
 const getTicketPack = async (searchId: string) => {
-  const url = `https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`;
+  const url = `${mainUrl}/tickets?searchId=${searchId}`;
   const response = await axios.get(url);
   return response.data;
 }
@@ -59,7 +61,7 @@ const App: FC = () => {
   const [filterParams, setFilterParams] = useState([0, 1, 2, 3]);
 
   useEffect(() => {
-    const loadTicket = async () => {
+    const loadTickets = async () => {
       const iter: any = async (searchId: string, acc: ticket[]) => {
         try {
           const ticketPack = await getTicketPack(searchId);
@@ -79,7 +81,7 @@ const App: FC = () => {
       setAllTickets(tickets);
       setIsLoad(false);
     }
-    loadTicket();
+    loadTickets();
   }, []);
 
   return (
