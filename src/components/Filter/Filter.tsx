@@ -22,9 +22,9 @@ export const Filter: FC<filterProps> = ({ handleFilter }) => {
 
   const [stops, setStops] = useState(initStops);
 
-  const handleStopsChange = useCallback((e: any) => {
-    const stopType: string = e.target.dataset.type;
-    const isChecked: boolean = e.target.checked;
+  const handleStopsChange = useCallback((e: React.SyntheticEvent<HTMLInputElement>) => {
+    const stopType = (e.target as HTMLInputElement).dataset.type;
+    const isChecked = (e.target as HTMLInputElement).checked;
     
     if (stopType === 'all') {
       setStops(Object.entries(stops).reduce((acc, [key, value]) => ({ ...acc, [key]: { ...value, checked: isChecked } }), {}));
@@ -32,7 +32,7 @@ export const Filter: FC<filterProps> = ({ handleFilter }) => {
       return;
     }
 
-    const newStops = { ...stops, [stopType]: { ...stops[stopType], checked: isChecked }};
+    const newStops = { ...stops, [stopType as string]: { ...stops[stopType as string], checked: isChecked }};
     const isAllFieldsChecked: boolean = Object.entries(newStops).filter(([key, ]) => key !== 'all').every(([, { checked }]) => checked);
     newStops['all'] = { ...newStops['all'], checked: isAllFieldsChecked };
     setStops(newStops);

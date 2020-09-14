@@ -5,7 +5,7 @@ type CheckboxProps = {
   stopType: string
   label: string
   isChecked: boolean
-  onChange: (e: any) => void
+  onChange: (e: React.SyntheticEvent<HTMLInputElement>) => void
 }
 
 export const Checkbox: FC<CheckboxProps> = ({ stopType, isChecked, label, onChange }) => (
