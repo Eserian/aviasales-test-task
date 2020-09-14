@@ -55,7 +55,7 @@ const getTicketPack = async (searchId: string) => {
 
 const App: FC = () => {
 
-  const [allTickets, setAllTickets] = useState([]);
+  const [allTickets, setAllTickets] = useState([] as ticket[]);
   const [isLoading, setIsLoading] = useState(true);
   const [sort, setSort] = useState('cheap');
   const [filterParams, setFilterParams] = useState([0, 1, 2, 3]);
@@ -66,9 +66,11 @@ const App: FC = () => {
     return filterParams.includes(flightForceStops) && filterParams.includes(flightBackStops);
   }
 
+  type iter = (searchId: string, acc: ticket[]) => Promise<ticket[] | iter>
+
   useEffect(() => {
     const loadTickets = async () => {
-      const iter: any = async (searchId: string, acc: ticket[]) => {
+      const iter: iter = async (searchId: string, acc: ticket[]) => {
         try {
           const ticketPack = await getTicketPack(searchId);
           const newAcc = [...acc, ...ticketPack.tickets];
@@ -84,7 +86,7 @@ const App: FC = () => {
       const searchId = await getSearchId();
       const tickets = await iter(searchId, []);
 
-      setAllTickets(tickets);
+      setAllTickets(tickets as ticket[]);
       setIsLoading(false);
     }
     loadTickets();
