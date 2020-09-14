@@ -32,7 +32,7 @@ export const Filter: FC<filterProps> = ({ handleFilter }) => {
       return;
     }
 
-    const newStops = { ...stops, [stopType]: { ...stops[stopType], checked: isChecked }}
+    const newStops = { ...stops, [stopType]: { ...stops[stopType], checked: isChecked }};
     const isAllFieldsChecked: boolean = Object.entries(newStops).filter(([key, ]) => key !== 'all').every(([, { checked }]) => checked);
     newStops['all'] = { ...newStops['all'], checked: isAllFieldsChecked };
     setStops(newStops);

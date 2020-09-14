@@ -4,7 +4,7 @@ import { Header } from './Header/Header';
 import { Filter } from './Filter/Filter';
 import { Sorting } from './Sorting/Sorting';
 import { Ticket } from './Ticket/Ticket';
-import { Preload } from './Preload/Preload';
+import { Preloader } from './Preloader/Preloader';
 import axios from 'axios';
 
 type flight = {
@@ -27,7 +27,7 @@ type sortingMap = {
 
 const comparePrice = (a: ticket, b: ticket) => a.price - b.price;
 
-const copmareFlightDuration = (a: ticket, b: ticket) => {
+const compareFlightDuration = (a: ticket, b: ticket) => {
   const firstFlightDuration = a.segments[0].duration + a.segments[1].duration;
   const secondFlightDuration = b.segments[0].duration + b.segments[1].duration;
 
@@ -35,20 +35,20 @@ const copmareFlightDuration = (a: ticket, b: ticket) => {
 }
 
 const sortingMap: sortingMap = {
-  'cheap': comparePrice,
-  'fast': copmareFlightDuration
+  cheap: comparePrice,
+  fast: compareFlightDuration
 }
 
-const mainUrl = 'https://front-test.beta.aviasales.ru';
+const API_URL = 'https://front-test.beta.aviasales.ru';
 
 const getSearchId = async () => {
-  const url = `${mainUrl}/search`;
+  const url = `${API_URL}/search`;
   const response = await axios.get(url);
   return response.data.searchId;
 }
 
 const getTicketPack = async (searchId: string) => {
-  const url = `${mainUrl}/tickets?searchId=${searchId}`;
+  const url = `${API_URL}/tickets?searchId=${searchId}`;
   const response = await axios.get(url);
   return response.data;
 }
@@ -56,9 +56,15 @@ const getTicketPack = async (searchId: string) => {
 const App: FC = () => {
 
   const [allTickets, setAllTickets] = useState([]);
-  const [isLoad, setIsLoad] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [sort, setSort] = useState('cheap');
   const [filterParams, setFilterParams] = useState([0, 1, 2, 3]);
+
+  const filter = (ticket: ticket) => {
+    const flightForceStops = ticket.segments[0].stops.length;
+    const flightBackStops = ticket.segments[1].stops.length;
+    return filterParams.includes(flightForceStops) && filterParams.includes(flightBackStops);
+  }
 
   useEffect(() => {
     const loadTickets = async () => {
@@ -79,7 +85,7 @@ const App: FC = () => {
       const tickets = await iter(searchId, []);
 
       setAllTickets(tickets);
-      setIsLoad(false);
+      setIsLoading(false);
     }
     loadTickets();
   }, []);
@@ -88,8 +94,8 @@ const App: FC = () => {
     <>
       <Header />
       {
-        isLoad ?
-          <Preload /> :
+        isLoading ?
+          <Preloader /> :
           <main className="main-grid">
             <Filter handleFilter={setFilterParams} />
             <div className="col-8">
@@ -97,11 +103,7 @@ const App: FC = () => {
               <div className="ticketList">
                 {
                   allTickets
-                    .filter((ticket: ticket) => {
-                      const flightForceStops = ticket.segments[0].stops.length;
-                      const flightBackStops = ticket.segments[1].stops.length;
-                      return filterParams.includes(flightForceStops) && filterParams.includes(flightBackStops);
-                    })
+                    .filter(filter)
                     .sort(sortingMap[sort])
                     .slice(0, 5)
                     .map((ticket: ticket, i) => <Ticket key={i} data={ticket} />)
