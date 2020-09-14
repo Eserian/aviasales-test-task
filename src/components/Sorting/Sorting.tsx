@@ -18,10 +18,10 @@ export const Sorting: FC<sortingProps> = ({ handleSort }) => {
     active: sortType === 'fast'
   })
 
-  const handleClick = useCallback((e: any) => {
-    const sortName: string = e.target.dataset.sortname;
-    setSortType(sortName);
-    handleSort(sortName);
+  const handleClick = useCallback((e: React.SyntheticEvent<HTMLDivElement>) => {
+    const sortName = (e.target as HTMLDivElement).dataset.sortname;
+    setSortType(sortName as string);
+    handleSort(sortName as string);
   }, [handleSort]);
 
   return (
