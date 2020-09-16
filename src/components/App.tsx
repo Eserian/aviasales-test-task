@@ -98,9 +98,9 @@ const App: FC = () => {
       {
         isLoading ?
           <Preloader /> :
-          <main className="main-grid">
+          <main className="flex">
             <Filter handleFilter={setFilterParams} />
-            <div className="col-8">
+            <div className="content">
               <Sorting handleSort={setSort} />
               <div className="ticketList">
                 {

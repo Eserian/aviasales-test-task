@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: center;
   height: 180px;
+  width: 500px;
   background: #fff;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -11,12 +12,14 @@
 
 .ticket-header {
   display: flex;
+  padding-left: 20px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .flight-data {
   display: flex;
   flex-direction: column;
-
 }
 
 .ticket-price {
@@ -27,13 +30,12 @@
   font-size: 24px;
   line-height: 24px;
   color: #2196F3;
-  padding-left: 20px;
+
 }
 
 .ticket-logo {
   flex: 1 1 auto;
-  text-align: right;
-  padding-right: 50px;
+  text-align: center;
 }
 
 .title {
@@ -49,6 +51,8 @@
 
 .row {
   display: flex;
+  padding: 0 20px;
+  justify-content: space-between;
 }
 
 .subtitle {
@@ -63,5 +67,31 @@
 .container {
   margin-top: 10px;
   flex: 1 1 33.333%;
-  padding-left: 20px;
+}
+
+
+@media (max-width: 480px) {
+  .ticket {
+    width: 300px;
+  }
+
+  .ticket-logo {
+    text-align: right;
+  }
+
+  .ticket-header {
+    padding-right: 20px;
+  }
+
+  .ticket-price {
+    font-size: 20px;
+  }
+
+  .title {
+    font-size: 10px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+  }
 }

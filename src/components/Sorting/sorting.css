@@ -2,9 +2,16 @@
   display: flex;
   background: #fff;
   height: 50px;
+  width: 500px;
   border: 1px solid #DFE5EC;
   margin-bottom: 20px;
   border-radius: 5px;
+}
+
+@media (max-width: 480px) {
+  .tabs {
+    width: 300px;
+  }
 }
 
 .tab {
