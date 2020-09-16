@@ -12,6 +12,7 @@
     "@types/node": "^12.12.54",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
+    "axios": "^0.20.0",
     "classnames": "^2.2.6",
     "date-fns": "^2.16.1",
     "plural-ru": "^2.0.2",

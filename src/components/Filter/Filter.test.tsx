@@ -3,7 +3,7 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import { Filter } from './Filter';
 
 beforeEach(() => {
-  render(<Filter />);
+  render(<Filter handleFilter={() => {}} />);
 })
 
 test('Checkbox check/uncheck', () => {
