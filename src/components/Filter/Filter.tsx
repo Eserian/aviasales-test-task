@@ -47,15 +47,17 @@ export const Filter: FC<filterProps> = ({ handleFilter }) => {
       <div className="filter-header">Количество пересадок</div>
       <div className="checkbox-list">
         {
-          Object.entries(stops).map(([key, { label, checked }], i) => (
-            <Checkbox
-              key={i}
-              label={label}
-              stopType={key}
-              isChecked={checked}
-              onChange={handleStopsChange}
-            />
-          ))
+          Object.entries(stops)
+            .sort(([ ,a], [, b]) => a.filterParam - b.filterParam)
+            .map(([key, { label, checked }], i) => (
+              <Checkbox
+                key={i}
+                label={label}
+                stopType={key}
+                isChecked={checked}
+                onChange={handleStopsChange}
+              />
+            ))
         }
       </div>
     </aside>
