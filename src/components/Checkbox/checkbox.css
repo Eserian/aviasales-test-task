@@ -36,3 +36,19 @@
     content: '✔';
     font-size: 15px;
 }
+
+@media (max-width: 767px) {
+    .checkbox-input + .checkbox-display {
+        width: 25px;
+        height: 25px;
+        margin-bottom: -9px;
+    }
+
+    .checkbox-input:checked + .checkbox-display::after {
+        font-size: 20px;
+    }
+
+    .checkbox-label {
+        font-size: 15px;
+    }
+}

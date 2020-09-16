@@ -43,7 +43,7 @@ export const Filter: FC<filterProps> = ({ handleFilter }) => {
   }, [handleFilter, stops]);
 
   return (
-    <aside className="filter col-4">
+    <aside className="filter">
       <div className="filter-header">Количество пересадок</div>
       <div className="checkbox-list">
         {
