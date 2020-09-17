@@ -25,6 +25,10 @@
   line-height: 20px;
 }
 
+.tab:hover {
+  cursor: pointer;
+}
+
 .left-tab {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
