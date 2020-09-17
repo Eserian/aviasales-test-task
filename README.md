@@ -5,5 +5,7 @@
 ## Использовались
 * TypeScript
 * React
+### Дополнительно реализовано
+* Адаптивная верстка
 
 Результат можно посмотреть [тут](https://eserian.github.io/aviasales-test-task/).
