@@ -4,7 +4,7 @@ import { Filter } from './Filter';
 
 beforeEach(() => {
   render(<Filter handleFilter={() => {}} />);
-})
+});
 
 test('Checkbox check/uncheck', () => {
   const checkbox = screen.getByLabelText('Без пересадок');
@@ -16,7 +16,7 @@ test('Checkbox check/uncheck', () => {
 test('Checkbox "All" works correctly', () => {
   const checkboxAll = screen.getByLabelText('Все');
   const checkboxes = screen.getAllByRole('checkbox');
-  checkboxes.forEach((c) => expect(c).toBeChecked())
+  checkboxes.forEach((c) => expect(c).toBeChecked());
   fireEvent.click(checkboxAll);
-  checkboxes.forEach((c) => expect(c).not.toBeChecked())
+  checkboxes.forEach((c) => expect(c).not.toBeChecked());
 });

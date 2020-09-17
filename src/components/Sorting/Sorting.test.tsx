@@ -15,4 +15,4 @@ test('Sorting click', () => {
 
   expect(leftTab).not.toHaveClass('active');
   expect(rightTab).toHaveClass('active');
-})
+});

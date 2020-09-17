@@ -13,17 +13,17 @@ type flight = {
   date: string
   stops: string[]
   duration: number
-}
+};
 
 export type ticket = {
   price: number
   carrier: string
   segments: flight[]
-}
+};
 
 type sortingMap = {
   [key: string]: (a: ticket, b: ticket) => number
-}
+};
 
 const comparePrice = (a: ticket, b: ticket) => a.price - b.price;
 
@@ -32,12 +32,12 @@ const compareFlightDuration = (a: ticket, b: ticket) => {
   const secondFlightDuration = b.segments[0].duration + b.segments[1].duration;
 
   return firstFlightDuration - secondFlightDuration;
-}
+};
 
 const sortingMap: sortingMap = {
   cheap: comparePrice,
   fast: compareFlightDuration
-}
+};
 
 const API_URL = 'https://front-test.beta.aviasales.ru';
 
@@ -45,16 +45,15 @@ const getSearchId = async () => {
   const url = `${API_URL}/search`;
   const response = await axios.get(url);
   return response.data.searchId;
-}
+};
 
 const getTicketPack = async (searchId: string) => {
   const url = `${API_URL}/tickets?searchId=${searchId}`;
   const response = await axios.get(url);
   return response.data;
-}
+};
 
 const App: FC = () => {
-
   const [allTickets, setAllTickets] = useState([] as ticket[]);
   const [isLoading, setIsLoading] = useState(true);
   const [sort, setSort] = useState('cheap');
@@ -64,9 +63,9 @@ const App: FC = () => {
     const flightForceStops = ticket.segments[0].stops.length;
     const flightBackStops = ticket.segments[1].stops.length;
     return filterParams.includes(flightForceStops) && filterParams.includes(flightBackStops);
-  }
+  };
 
-  type iter = (searchId: string, acc: ticket[]) => Promise<ticket[] | iter>
+  type iter = (searchId: string, acc: ticket[]) => Promise<ticket[] | iter>;
 
   useEffect(() => {
     const loadTickets = async () => {
@@ -81,14 +80,15 @@ const App: FC = () => {
         } catch (e) {
           return iter(searchId, acc);
         }
-      }
+      };
 
       const searchId = await getSearchId();
       const tickets = await iter(searchId, []);
 
       setAllTickets(tickets as ticket[]);
       setIsLoading(false);
-    }
+    };
+
     loadTickets();
   }, []);
 
@@ -116,6 +116,6 @@ const App: FC = () => {
       }
     </>
   );
-}
+};
 
 export default App;

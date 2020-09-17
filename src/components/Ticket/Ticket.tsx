@@ -15,7 +15,6 @@ const getTimeFromMins = (mins: number) => {
 };
 
 export const Ticket: FC<FlightCardProps> = ({ data }) => {
-
   const { price, carrier, segments } = data;
   const url = `//pics.avs.io/99/36/${carrier}.png`;
 
@@ -46,5 +45,5 @@ export const Ticket: FC<FlightCardProps> = ({ data }) => {
         }
       </div>
     </div>
-  )
-}
+  );
+};

@@ -7,4 +7,3 @@ export const Header: FunctionComponent = () => (
     <img src={logo} alt="logo" />
   </header>
 );
-

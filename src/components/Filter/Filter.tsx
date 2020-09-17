@@ -8,10 +8,9 @@ type stops = {
 
 type filterProps = {
   handleFilter: (filterParams: number[]) => void
-}
+};
 
 export const Filter: FC<filterProps> = ({ handleFilter }) => {
-
   const initStops: stops = {
     'all': { label: 'Все', checked: true, filterParam: -1 },
     'without stops': { label: 'Без пересадок', checked: true, filterParam: 0 },
@@ -61,5 +60,5 @@ export const Filter: FC<filterProps> = ({ handleFilter }) => {
         }
       </div>
     </aside>
-  )
+  );
 };

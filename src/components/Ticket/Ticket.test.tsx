@@ -22,9 +22,9 @@ const testTicket: ticket = {
       duration: 681
     }
   ]
-}
+};
 
 test('Render correctly', () => {
   const ticket = render(<Ticket data={testTicket} />);
   expect(ticket).toMatchSnapshot();
-})
+});

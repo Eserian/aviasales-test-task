@@ -30,7 +30,6 @@
   font-size: 24px;
   line-height: 24px;
   color: #2196F3;
-
 }
 
 .ticket-logo {
@@ -68,7 +67,6 @@
   margin-top: 10px;
   flex: 1 1 33.333%;
 }
-
 
 @media (max-width: 480px) {
   .ticket {
