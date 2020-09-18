@@ -47,7 +47,7 @@ export const Filter: FC<filterProps> = ({ handleFilter }) => {
       <div className="checkbox-list">
         {
           Object.entries(stops)
-            .sort(([ ,a], [, b]) => a.filterParam - b.filterParam)
+            .sort(([, a], [, b]) => a.filterParam - b.filterParam)
             .map(([key, { label, checked }], i) => (
               <Checkbox
                 key={i}
