@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Open Sans';
   src: url('fonts/OpenSans-SemiBold.woff2') format('woff2'),
-      url('fonts/OpenSans-SemiBold.woff') format('woff');
+    url('fonts/OpenSans-SemiBold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -10,7 +10,7 @@
 @font-face {
   font-family: 'Open Sans';
   src: url('fonts/OpenSans-Regular.woff') format('woff'),
-       url('fonts/OpenSans-Regular.woff2') format('woff2');
+    url('fonts/OpenSans-Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
@@ -23,6 +23,5 @@ body {
   font-family: 'Open Sans', sans-serif;
   text-align: center;
   margin: 0 auto;
-  background: #F3F7FA;
+  background: #f3f7fa;
 }
-

@@ -1,6 +1,6 @@
 .filter {
   background: #fff;
-  border: 1px solid #DFE5EC;
+  border: 1px solid #dfe5ec;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   text-align: left;
@@ -22,7 +22,7 @@
   line-height: 12px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: #4A4A4A;
+  color: #4a4a4a;
   padding: 20px 20px 5px;
 }
 

@@ -1,42 +1,42 @@
 import React, { FC, useEffect, useState } from 'react';
 import './App.css';
+import axios from 'axios';
 import { Header } from './Header/Header';
 import { Filter } from './Filter/Filter';
 import { Sorting } from './Sorting/Sorting';
-import { Ticket } from './Ticket/Ticket';
+import { FlightCard } from './FlightCard/FlightCard';
 import { Preloader } from './Preloader/Preloader';
-import axios from 'axios';
 
-type flight = {
-  origin: string
-  destination: string
-  date: string
-  stops: string[]
-  duration: number
+type Flight = {
+  origin: string;
+  destination: string;
+  date: string;
+  stops: string[];
+  duration: number;
 };
 
-export type ticket = {
-  price: number
-  carrier: string
-  segments: flight[]
+export type Ticket = {
+  price: number;
+  carrier: string;
+  segments: Flight[];
 };
 
-type sortingMap = {
-  [key: string]: (a: ticket, b: ticket) => number
+type SortingMap = {
+  [key: string]: (a: Ticket, b: Ticket) => number;
 };
 
-const comparePrice = (a: ticket, b: ticket) => a.price - b.price;
+const comparePrice = (a: Ticket, b: Ticket) => a.price - b.price;
 
-const compareFlightDuration = (a: ticket, b: ticket) => {
+const compareFlightDuration = (a: Ticket, b: Ticket) => {
   const firstFlightDuration = a.segments[0].duration + a.segments[1].duration;
   const secondFlightDuration = b.segments[0].duration + b.segments[1].duration;
 
   return firstFlightDuration - secondFlightDuration;
 };
 
-const sortingMap: sortingMap = {
+const sortingMap: SortingMap = {
   cheap: comparePrice,
-  fast: compareFlightDuration
+  fast: compareFlightDuration,
 };
 
 const API_URL = 'https://front-test.beta.aviasales.ru';
@@ -54,22 +54,25 @@ const getTicketPack = async (searchId: string) => {
 };
 
 const App: FC = () => {
-  const [allTickets, setAllTickets] = useState([] as ticket[]);
+  const [allTickets, setAllTickets] = useState([] as Ticket[]);
   const [isLoading, setIsLoading] = useState(true);
   const [sort, setSort] = useState('cheap');
   const [filterParams, setFilterParams] = useState([0, 1, 2, 3]);
 
-  const filter = (ticket: ticket) => {
+  const filter = (ticket: Ticket) => {
     const flightForceStops = ticket.segments[0].stops.length;
     const flightBackStops = ticket.segments[1].stops.length;
-    return filterParams.includes(flightForceStops) && filterParams.includes(flightBackStops);
+    return (
+      filterParams.includes(flightForceStops) &&
+      filterParams.includes(flightBackStops)
+    );
   };
 
-  type iter = (searchId: string, acc: ticket[]) => Promise<ticket[] | iter>;
+  type Iter = (searchId: string, acc: Ticket[]) => Promise<Ticket[] | Iter>;
 
   useEffect(() => {
     const loadTickets = async () => {
-      const iter: iter = async (searchId: string, acc: ticket[]) => {
+      const iter: Iter = async (searchId: string, acc: Ticket[]) => {
         try {
           const ticketPack = await getTicketPack(searchId);
           const newAcc = [...acc, ...ticketPack.tickets];
@@ -85,7 +88,7 @@ const App: FC = () => {
       const searchId = await getSearchId();
       const tickets = await iter(searchId, []);
 
-      setAllTickets(tickets as ticket[]);
+      setAllTickets(tickets as Ticket[]);
       setIsLoading(false);
     };
 
@@ -95,25 +98,25 @@ const App: FC = () => {
   return (
     <>
       <Header />
-      {
-        isLoading ?
-          <Preloader /> :
-          <main className="flex">
-            <Filter handleFilter={setFilterParams} />
-            <div className="content">
-              <Sorting handleSort={setSort} />
-              <div className="ticketList">
-                {
-                  allTickets
-                    .filter(filter)
-                    .sort(sortingMap[sort])
-                    .slice(0, 5)
-                    .map((ticket: ticket, i) => <Ticket key={i} data={ticket} />)
-                }
-              </div> 
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <main className="flex">
+          <Filter handleFilter={setFilterParams} />
+          <div className="content">
+            <Sorting handleSort={setSort} />
+            <div className="ticketList">
+              {allTickets
+                .filter(filter)
+                .sort(sortingMap[sort])
+                .slice(0, 5)
+                .map((Ticket: Ticket, i) => (
+                  <FlightCard key={i} data={Ticket} />
+                ))}
             </div>
-          </main>
-      }
+          </div>
+        </main>
+      )}
     </>
   );
 };

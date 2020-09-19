@@ -3,7 +3,7 @@
   background: #fff;
   height: 50px;
   width: 500px;
-  border: 1px solid #DFE5EC;
+  border: 1px solid #dfe5ec;
   margin-bottom: 20px;
   border-radius: 5px;
 }
@@ -40,6 +40,6 @@
 }
 
 .active {
-  background: #2196F3;
+  background: #2196f3;
   color: #fff;
 }
