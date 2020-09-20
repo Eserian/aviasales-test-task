@@ -68,9 +68,9 @@ const App: FC = () => {
     );
   };
 
-  type Iter = (searchId: string, acc: Ticket[]) => Promise<Ticket[] | Iter>;
-
   useEffect(() => {
+    type Iter = (searchId: string, acc: Ticket[]) => Promise<Ticket[] | Iter>;
+
     const loadTickets = async () => {
       const iter: Iter = async (searchId: string, acc: Ticket[]) => {
         try {
