@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import plural from 'plural-ru';
 import { format, addMinutes } from 'date-fns';
 import { Ticket } from '../App';
-import './ticket.css';
+import './fliightCard.css';
 
 type FlightCardProps = {
   data: Ticket;
