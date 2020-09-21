@@ -12,7 +12,7 @@ type FilterProps = {
 
 export const Filter: FC<FilterProps> = ({ handleFilter }) => {
   const initStops: Stops = {
-    all: { label: 'Все', checked: true, filterParam: -1 },
+    'all': { label: 'Все', checked: true, filterParam: -1 },
     'without stops': { label: 'Без пересадок', checked: true, filterParam: 0 },
     'one stop': { label: '1 пересадка', checked: true, filterParam: 1 },
     'two stops': { label: '2 пересадки', checked: true, filterParam: 2 },
