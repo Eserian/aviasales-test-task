@@ -62,10 +62,7 @@ const App: FC = () => {
   const filter = (ticket: Ticket) => {
     const flightForceStops = ticket.segments[0].stops.length;
     const flightBackStops = ticket.segments[1].stops.length;
-    return (
-      filterParams.includes(flightForceStops) &&
-      filterParams.includes(flightBackStops)
-    );
+    return filterParams.includes(flightForceStops) && filterParams.includes(flightBackStops);
   };
 
   useEffect(() => {

@@ -8,12 +8,7 @@ type CheckboxProps = {
   onChange: (e: React.SyntheticEvent<HTMLInputElement>) => void;
 };
 
-export const Checkbox: FC<CheckboxProps> = ({
-  stopType,
-  isChecked,
-  label,
-  onChange,
-}) => (
+export const Checkbox: FC<CheckboxProps> = ({ stopType, isChecked, label, onChange }) => (
   <div className="checkbox">
     <label className="checkbox-label">
       <input

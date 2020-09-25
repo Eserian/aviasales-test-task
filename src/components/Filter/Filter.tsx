@@ -12,7 +12,7 @@ type FilterProps = {
 
 export const Filter: FC<FilterProps> = ({ handleFilter }) => {
   const initStops: Stops = {
-    'all': { label: 'Все', checked: true, filterParam: -1 },
+    all: { label: 'Все', checked: true, filterParam: -1 },
     'without stops': { label: 'Без пересадок', checked: true, filterParam: 0 },
     'one stop': { label: '1 пересадка', checked: true, filterParam: 1 },
     'two stops': { label: '2 пересадки', checked: true, filterParam: 2 },
@@ -21,44 +21,43 @@ export const Filter: FC<FilterProps> = ({ handleFilter }) => {
 
   const [stops, setStops] = useState(initStops);
 
-  const handleStopsChange = useCallback(
-    (e: React.SyntheticEvent<HTMLInputElement>) => {
-      const stopType = (e.target as HTMLInputElement).dataset.type;
-      const isChecked = (e.target as HTMLInputElement).checked;
+  const handleStopsChange = useCallback((e: React.SyntheticEvent<HTMLInputElement>) => {
+    const stopType = (e.target as HTMLInputElement).dataset.type;
+    const isChecked = (e.target as HTMLInputElement).checked;
 
-      if (stopType === 'all') {
-        setStops(
-          Object.entries(stops).reduce(
-            (acc, [key, value]) => ({
-              ...acc,
-              [key]: { ...value, checked: isChecked },
-            }),
-            {}
-          )
-        );
-        handleFilter(isChecked ? [0, 1, 2, 3] : []);
-        return;
-      }
-
-      const newStops = {
-        ...stops,
-        [stopType as string]: {
-          ...stops[stopType as string],
-          checked: isChecked,
-        },
-      };
-      const isAllFieldsChecked: boolean = Object.entries(newStops)
-        .filter(([key]) => key !== 'all')
-        .every(([, { checked }]) => checked);
-      newStops.all = { ...newStops.all, checked: isAllFieldsChecked };
-      setStops(newStops);
-      handleFilter(
-        Object.keys(newStops)
-          .filter((key) => newStops[key].checked)
-          .map((key) => newStops[key].filterParam)
+    if (stopType === 'all') {
+      setStops(
+        Object.entries(stops).reduce(
+          (acc, [key, value]) => ({
+            ...acc,
+            [key]: { ...value, checked: isChecked },
+          }),
+          {}
+        )
       );
-    },
-    [handleFilter, stops]
+      handleFilter(isChecked ? [0, 1, 2, 3] : []);
+      return;
+    }
+
+    const newStops = {
+      ...stops,
+      [stopType as string]: {
+        ...stops[stopType as string],
+        checked: isChecked,
+      },
+    };
+    const isAllFieldsChecked: boolean = Object.entries(newStops)
+      .filter(([key]) => key !== 'all')
+      .every(([, { checked }]) => checked);
+    newStops.all = { ...newStops.all, checked: isAllFieldsChecked };
+    setStops(newStops);
+    handleFilter(
+      Object.keys(newStops)
+        .filter((key) => newStops[key].checked)
+        .map((key) => newStops[key].filterParam)
+    );
+  },
+  [handleFilter, stops]
   );
 
   return (

@@ -17,13 +17,12 @@ export const Sorting: FC<SortingProps> = ({ handleSort }) => {
     active: sortType === 'fast',
   });
 
-  const handleClick = useCallback(
-    (e: React.SyntheticEvent<HTMLDivElement>) => {
-      const sortName = (e.target as HTMLDivElement).dataset.sortname;
-      setSortType(sortName as string);
-      handleSort(sortName as string);
-    },
-    [handleSort]
+  const handleClick = useCallback((e: React.SyntheticEvent<HTMLDivElement>) => {
+    const sortName = (e.target as HTMLDivElement).dataset.sortname;
+    setSortType(sortName as string);
+    handleSort(sortName as string);
+  },
+  [handleSort]
   );
 
   return (

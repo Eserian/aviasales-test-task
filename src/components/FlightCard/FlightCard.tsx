@@ -45,12 +45,7 @@ export const FlightCard: FC<FlightCardProps> = ({ data }) => {
             </div>
             <div className="container">
               <div className="title">
-                {plural(
-                  stops.length,
-                  '%d пересадка',
-                  '%d пересадки',
-                  'Без пересадок'
-                )}
+                {plural(stops.length, '%d пересадка', '%d пересадки', 'Без пересадок')}
               </div>
               <div className="subtitle">{stops.join(',')}</div>
             </div>
